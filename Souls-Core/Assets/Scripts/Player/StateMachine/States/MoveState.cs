@@ -1,16 +1,24 @@
 using UnityEngine;
 
-public class MoveState : MonoBehaviour
+public class MoveState : BaseState
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public override void OnEnter(PlayerStateManager manager)
+	{
+		Debug.Log("move state entered");
+	}
+
+	public override void OnUpdate(PlayerStateManager manager)
+	{
+		if (manager.pc.inputHandler.moveDirection.sqrMagnitude == 0)
+			manager.SwitchState(PlayerStateManager.idleState);
+
+		manager.pc.mh.DoMovement(manager.pc.inputHandler.moveDirection);
+		//call move function in movement system here
+	}
+
+	public override void OnExit(PlayerStateManager manager)
+	{
+		Debug.Log("move State exited");
+	}
 }

@@ -3,13 +3,18 @@ using UnityEngine;
 public class PlayerStateManager : MonoBehaviour
 {
 	public static IdleState idleState = new IdleState();
-	/*public static MoveState moveState = new MoveState();
-	public static RollState rollState = new RollState();
+	public static MoveState moveState = new MoveState();
+/*	public static RollState rollState = new RollState();
 	public static AttackState attackState = new AttackState();*/
 
 	private BaseState currentState = null;
 
 	public PlayerController pc;
+
+	void Awake()
+	{
+		pc = GetComponent<PlayerController>();
+	}
 
 	public void SwitchState(BaseState state)
 	{

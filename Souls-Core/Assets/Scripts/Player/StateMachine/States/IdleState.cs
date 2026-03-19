@@ -9,7 +9,8 @@ public class IdleState : BaseState
 
 	public override void OnUpdate(PlayerStateManager manager)
 	{
-		Debug.Log($"movement vector = {manager.pc.inputHandler.moveDirection}");
+		if (manager.pc.inputHandler.moveDirection.sqrMagnitude > 0.01)
+			manager.SwitchState(PlayerStateManager.moveState);
 	}
 
 	public override void OnExit(PlayerStateManager manager)

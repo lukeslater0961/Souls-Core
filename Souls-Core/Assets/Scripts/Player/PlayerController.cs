@@ -2,15 +2,25 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-	private PlayerStateManager playerSM;
-	public  InputHandler inputHandler;
-	//private 
-	
+
+#region Systems
+	private PlayerStateManager	playerSM;
+	public  InputHandler		inputHandler;
+	public	MovementHandler		mh;
+#endregion
+
 	void Start()
 	{
-		Debug.Log("player controller strat");
-		playerSM = GetComponent<PlayerStateManager>();
+		Init();
+
 		playerSM.SwitchState(PlayerStateManager.idleState);
+	}
+
+	void Init()
+	{
+		playerSM = GetComponent<PlayerStateManager>();
+		inputHandler = GetComponent<InputHandler>();
+		mh = GetComponent<MovementHandler>();
 	}
 
 	void Update()
