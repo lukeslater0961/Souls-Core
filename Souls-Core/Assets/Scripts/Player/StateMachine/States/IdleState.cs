@@ -11,6 +11,9 @@ public class IdleState : BaseState
 	{
 		if (manager.pc.inputHandler.moveDirection.sqrMagnitude > 0.01)
 			manager.SwitchState(PlayerStateManager.moveState);
+
+		if (manager.pc.inputHandler.jumpPressed && manager.pc.mh._isGrounded)
+			manager.pc.mh.Jump();
 	}
 
 	public override void OnExit(PlayerStateManager manager)

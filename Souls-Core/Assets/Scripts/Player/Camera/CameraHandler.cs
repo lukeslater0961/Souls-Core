@@ -4,17 +4,20 @@ public class CameraHandler : MonoBehaviour
 {
 #region References
 	private InputHandler	_input;
+	private PlayerStats		_stats;
 #endregion
 
 #region Values
 	private Camera		_camera;
 	public  Transform	_transform;
+	private Vector2		_look;
 #endregion
 
     void Start()
     {
 		_camera = Camera.main;
         _input = GetComponentInParent<InputHandler>();
+		_stats = GetComponentInParent<PlayerStats>();
     }
 
     void LateUpdate()
@@ -23,7 +26,9 @@ public class CameraHandler : MonoBehaviour
         if (_input.lookDirection.sqrMagnitude <= 0)
 			return;
 		
-		this.transform.Rotate(Vector3.up, _input.lookDirection.x * 100f * Time.deltaTime);
-		//apply camera rotation y axis
+		_look.y +=  _input.lookDirection.y * _stats.sensitivity;
+		_look.x +=  _input.lookDirection.x * _stats.sensitivity;
+		_look.y = Mathf.Clamp(_look.y, -40f, 60f);
+		this.transform.localRotation = Quaternion.Euler(-_look.y, _look.x, 0);
     }
 }

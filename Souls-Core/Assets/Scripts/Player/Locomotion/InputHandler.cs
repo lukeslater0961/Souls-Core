@@ -11,11 +11,15 @@ public class InputHandler : MonoBehaviour
 
 	public Vector2 moveDirection;
 	public Vector2 lookDirection;
+	public bool		jumpPressed;
 
     void Start()
     {
 		move = InputSystem.actions.FindAction("move");
 		look = InputSystem.actions.FindAction("look");
+
+		InputSystem.actions["Jump"].performed += _ => jumpPressed = true;
+        InputSystem.actions["Jump"].canceled  += _ => jumpPressed = false;
     }
 
     void Update()

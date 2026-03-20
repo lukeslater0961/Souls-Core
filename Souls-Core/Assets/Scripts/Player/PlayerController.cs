@@ -26,5 +26,6 @@ public class PlayerController : MonoBehaviour
 	void Update()
 	{
 		playerSM.OnUpdateState();
+		mh.ApplyGravity();
 	}
 }
