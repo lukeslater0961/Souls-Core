@@ -3,25 +3,27 @@ using UnityEngine;
 public class CameraHandler : MonoBehaviour
 {
 #region References
-	private InputHandler input;
+	private InputHandler	_input;
 #endregion
 
 #region Values
 	private Camera		_camera;
-	private Transform	_transform;
+	public  Transform	_transform;
 #endregion
 
     void Start()
     {
 		_camera = Camera.main;
-        input = GetComponentInParent<InputHandler>();
+        _input = GetComponentInParent<InputHandler>();
     }
 
     void LateUpdate()
     {
 		_transform = _camera.transform;
-        if (input.lookDirection.sqrMagnitude <= 0)
+        if (_input.lookDirection.sqrMagnitude <= 0)
 			return;
-		//apply camera rotation
+		
+		this.transform.Rotate(Vector3.up, _input.lookDirection.x * 100f * Time.deltaTime);
+		//apply camera rotation y axis
     }
 }

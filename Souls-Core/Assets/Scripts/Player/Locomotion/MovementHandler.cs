@@ -18,8 +18,18 @@ public class MovementHandler : MonoBehaviour
 
 	public void DoMovement(Vector2 moveDirection)
 	{
-		Vector3 moveDir = new Vector3(moveDirection.x, 0f, moveDirection.y);
-		cc.Move(moveDir * speed * Time.deltaTime);
+		Vector3 camForward = _camera._transform.forward;
+		Vector3 camRight = _camera._transform.right;
+
+		camForward.y = 0;
+		camRight.y = 0;
+
+		camForward.Normalize();
+		camRight.Normalize();
+
+		Vector3 move = camForward * moveDirection.y + camRight * moveDirection.x;
+		cc.Move(move * speed * Time.deltaTime);
+
 		//to be modified later on , mvoement will be based on camera.right/.forward normalized
 	}
 }
