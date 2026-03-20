@@ -3,10 +3,14 @@ using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
+#region References
+	private LockOnHandler _lockHandler;
+#endregion
 
 #region Inputs
-	private InputAction move;
-	private InputAction look;
+	private InputAction _move;
+	private InputAction _look;
+	private InputAction _lock;
 #endregion
 
 	public Vector2 moveDirection;
@@ -15,16 +19,25 @@ public class InputHandler : MonoBehaviour
 
     void Start()
     {
-		move = InputSystem.actions.FindAction("move");
-		look = InputSystem.actions.FindAction("look");
+		_lockHandler = GetComponentInChildren<LockOnHandler>();
+		_move = InputSystem.actions.FindAction("move");
+		_look = InputSystem.actions.FindAction("look");
+		_lock = InputSystem.actions.FindAction("lock");
 
 		InputSystem.actions["Jump"].performed += _ => jumpPressed = true;
+		InputSystem.actions["Lock"].performed += _ => OnLockPressed();
         InputSystem.actions["Jump"].canceled  += _ => jumpPressed = false;
+
     }
 
     void Update()
     {
-        moveDirection = move.ReadValue<Vector2>();
-		lookDirection = look.ReadValue<Vector2>();
+        moveDirection = _move.ReadValue<Vector2>();
+		lookDirection = _look.ReadValue<Vector2>();
     }
+
+	private void OnLockPressed()
+	{
+		_lockHandler.GetClosestTarget();
+	}
 }
