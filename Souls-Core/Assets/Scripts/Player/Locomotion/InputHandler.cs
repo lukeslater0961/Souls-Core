@@ -4,7 +4,8 @@ using UnityEngine.InputSystem;
 public class InputHandler : MonoBehaviour
 {
 #region References
-	private LockOnHandler _lockHandler;
+	[SerializeField] LockOnHandler _lockHandler;
+	[SerializeField] public CameraHandler _camera;
 #endregion
 
 #region Inputs
@@ -19,7 +20,6 @@ public class InputHandler : MonoBehaviour
 
     void Start()
     {
-		_lockHandler = GetComponentInChildren<LockOnHandler>();
 		_move = InputSystem.actions.FindAction("move");
 		_look = InputSystem.actions.FindAction("look");
 		_lock = InputSystem.actions.FindAction("lock");
@@ -38,6 +38,9 @@ public class InputHandler : MonoBehaviour
 
 	private void OnLockPressed()
 	{
-		_lockHandler.GetClosestTarget();
+		if (_camera._isLocked)
+			_camera.UnlockTarget();
+		else
+			_lockHandler.GetClosestTarget();
 	}
 }

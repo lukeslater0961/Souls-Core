@@ -15,5 +15,6 @@ MonoBehaviour:
   maxHealth: 100
   stamina: 100
   speed: 10
-  sensitivity: 0.3
+  sensitivity: 0.5
   jumpForce: 2
+  rotationSpeed: 20

@@ -28,6 +28,6 @@ public class LockOnHandler : MonoBehaviour
 				validTargets.Add(target);
 		}
 		if (validTargets.Count > 0)
-			_camera.LockCamera(validTargets);
+			_camera.GetTarget(validTargets);
 	}
 }

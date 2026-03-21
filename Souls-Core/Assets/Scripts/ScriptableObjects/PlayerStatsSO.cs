@@ -8,4 +8,5 @@ public class PlayerStatsSO : ScriptableObject
 	public float speed;
 	public float sensitivity;
 	public float jumpForce;
+	public float rotationSpeed;
 }
