@@ -10,13 +10,15 @@ public class InputHandler : MonoBehaviour
 
 #region Inputs
 	private InputAction _move;
+	private InputAction _sprint;
 	private InputAction _look;
 	private InputAction _lock;
 #endregion
 
-	public Vector2 moveDirection;
-	public Vector2 lookDirection;
+	public Vector2	moveDirection;
+	public Vector2	lookDirection;
 	public bool		jumpPressed;
+	public bool		isSprinting;
 
     void Start()
     {
@@ -24,9 +26,11 @@ public class InputHandler : MonoBehaviour
 		_look = InputSystem.actions.FindAction("look");
 		_lock = InputSystem.actions.FindAction("lock");
 
+		InputSystem.actions["Sprint"].performed += _ => isSprinting = true;
+		InputSystem.actions["Sprint"].canceled += _ => isSprinting = false;
 		InputSystem.actions["Jump"].performed += _ => jumpPressed = true;
+		InputSystem.actions["Jump"].canceled  += _ => jumpPressed = false;
 		InputSystem.actions["Lock"].performed += _ => OnLockPressed();
-        InputSystem.actions["Jump"].canceled  += _ => jumpPressed = false;
 
     }
 

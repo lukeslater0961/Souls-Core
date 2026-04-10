@@ -13,6 +13,11 @@ public class MovementHandler : MonoBehaviour
 	public  bool	_isGrounded;
 	private CameraHandler _camera;
 	
+	public enum MoveMode
+	{
+		Walk,
+		Sprint
+	};
 #endregion
 
 	void Awake()
@@ -22,10 +27,10 @@ public class MovementHandler : MonoBehaviour
 		_stats = GetComponent<PlayerStats>();
 	}
 
-	public void DoMovement(Vector2 moveDirection)
+	public void DoMovement(Vector2 moveDirection, MoveMode mode)
 	{
-
 		//player movement 
+		float playerVelocity = (mode == MoveMode.Walk) ? _stats.speed : _stats.sprintSpeed;
 		Vector3 camForward = _cameraRef._transform.forward;
 		Vector3 camRight = _cameraRef._transform.right;
 
@@ -36,7 +41,14 @@ public class MovementHandler : MonoBehaviour
 		camRight.Normalize();
 
 		Vector3 move = camForward * moveDirection.y + camRight * moveDirection.x;
-		_cc.Move(move * _stats.speed * Time.deltaTime); 
+		_cc.Move(move * playerVelocity * Time.deltaTime); 
+
+		if (_camera._isLocked && mode == MoveMode.Walk)
+		{
+			RotateToTarget();
+			return; // Rotate character to target when locked and walking
+		}
+
 		Quaternion targetRotation = Quaternion.LookRotation(move);
 		transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _stats.rotationSpeed * Time.deltaTime);
 	}

@@ -15,8 +15,13 @@ public class MoveState : BaseState
 
 		if (manager.pc.inputHandler.jumpPressed && manager.pc.mh._isGrounded)
 			manager.pc.mh.Jump();
+		
+		var mode = (manager.pc.inputHandler.isSprinting) 
+			? MovementHandler.MoveMode.Sprint 
+			: MovementHandler.MoveMode.Walk;
 
-		manager.pc.mh.DoMovement(manager.pc.inputHandler.moveDirection);
+		manager.pc.mh.DoMovement(manager.pc.inputHandler.moveDirection, mode);
+
 		//call move function in movement system here
 	}
 

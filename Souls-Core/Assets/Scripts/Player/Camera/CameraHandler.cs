@@ -81,6 +81,8 @@ public class CameraHandler : MonoBehaviour
 
 	public void UnlockTarget()
 	{
+		if (_look.y > 180f) _look.y -= 360f;
+
 		_target = null;
 		_isLocked = false;
 	}

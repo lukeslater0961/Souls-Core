@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerStatsSO : ScriptableObject 
 {
 	public float maxHealth;
+	public float sprintSpeed;
 	public float stamina;
 	public float speed;
 	public float sensitivity;
