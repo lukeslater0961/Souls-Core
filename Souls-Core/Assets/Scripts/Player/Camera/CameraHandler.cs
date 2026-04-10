@@ -7,31 +7,43 @@ public class CameraHandler : MonoBehaviour
 	[SerializeField] InputHandler	_input;
 	[SerializeField] PlayerStats	_stats;
 	[SerializeField] GameObject		_player;
+	[SerializeField] LockOnHandler	_lockHandler;
 #endregion
 
 #region Values
 	private Camera		_camera;
 	public  Transform	_transform;
-	private float		_maxLockDistance = 35f;
 
-	private Vector2		_look;
+	public Vector2		_look;
 	public  Transform	_target;
-	public	bool		_isLocked {get; private set;}
+	public	bool		_isLocked {get; set;}
+
+	[SerializeField]
+	[Range(0f, 10f)]
+	private float sphereRadius = .3f;
+	private float _armLength = 5f;
+	private float _outSpeed = 10f;
+	private float _inSpeed = 20f;
+	public LayerMask _occluders;
+	private float _currentLength;
+
 #endregion
 
     void Start()
     {
 		_isLocked = false;
 		_camera = Camera.main;
+		_currentLength = _armLength;
     }
 
     void LateUpdate()
     {
 		_transform = _camera.transform;
-		transform.position = _player.transform.position;
+		transform.position = _player.transform.position + new Vector3(0, 3f, 0);
 		RotateCamera();
-		LockTarget();
-		CheckTargetDistance();
+		LockToTarget();
+		_lockHandler.CheckTargetDistance();
+		CameraBoom();
     }
 
 	void RotateCamera()
@@ -45,29 +57,21 @@ public class CameraHandler : MonoBehaviour
 		this.transform.localRotation = Quaternion.Euler(-_look.y, _look.x, 0);
 	}
 
-	public void GetTarget(List<Collider> validTargets)
+	void CameraBoom()
 	{
-		Transform closestTarget = null;
-		float closestDistance = Mathf.Infinity;
+		Vector3 origin = transform.position;
+		Vector3 direction = -_camera.transform.forward;
+		float target = _armLength;
 
-		foreach (var target in validTargets)
-		{
-			float distance = Vector3.Distance(transform.position, target.transform.position);
-			if (distance < closestDistance)
-			{
-				closestDistance = distance;
-				closestTarget = target.transform;
-			}
-		}
+		if (Physics.SphereCast(origin, sphereRadius, direction, out RaycastHit hit, _armLength, _occluders))
+			target = hit.distance;
 
-		if (closestTarget != null)
-		{
-			_isLocked = true;
-			_target = closestTarget;
-		}
+		float speed = (target < _currentLength) ? _inSpeed : _outSpeed;
+		_currentLength = Mathf.Lerp(_currentLength, target, speed * Time.deltaTime);
+		_camera.transform.position = origin + direction * _currentLength;
 	}
 
-	void LockTarget()
+	void LockToTarget()
 	{
 		if (_target == null) return;
 
@@ -77,24 +81,6 @@ public class CameraHandler : MonoBehaviour
 		_look.x = targetRotation.eulerAngles.y;
 		_look.y = targetRotation.eulerAngles.x;
 		transform.localRotation = Quaternion.Euler(-_look.y, _look.x, 0);
-	}
-
-	public void UnlockTarget()
-	{
-		if (_look.y > 180f) _look.y -= 360f;
-
-		_target = null;
-		_isLocked = false;
-	}
-
-	void CheckTargetDistance()
-	{
-		if (!_isLocked)
-			return;
-
-		float distance = Vector3.Distance(transform.position, _target.position);
-		if (distance >= _maxLockDistance)
-			UnlockTarget();
 	}
 }
 

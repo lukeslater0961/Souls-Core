@@ -43,8 +43,8 @@ public class InputHandler : MonoBehaviour
 	private void OnLockPressed()
 	{
 		if (_camera._isLocked)
-			_camera.UnlockTarget();
+			_lockHandler.UnlockTarget();
 		else
-			_lockHandler.GetClosestTarget();
+			_lockHandler.GetTargets();
 	}
 }
