@@ -17,6 +17,9 @@ public class IdleState : BaseState
 
 		if (manager.pc.inputHandler._camera._isLocked)
 			manager.pc.mh.RotateToTarget();
+
+		if (manager.pc.stats.stamina < manager.pc.stats.maxStamina)
+			manager.pc.statHandler.RegenStamina();
 	}
 
 	public override void OnExit(PlayerStateManager manager)

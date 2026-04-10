@@ -4,8 +4,8 @@ using UnityEngine.InputSystem;
 public class InputHandler : MonoBehaviour
 {
 #region References
-	[SerializeField] LockOnHandler _lockHandler;
-	[SerializeField] public CameraHandler _camera;
+	[SerializeField] LockOnHandler			_lockHandler;
+	[SerializeField] public CameraHandler	_camera;
 #endregion
 
 #region Inputs
@@ -31,7 +31,6 @@ public class InputHandler : MonoBehaviour
 		InputSystem.actions["Jump"].performed += _ => jumpPressed = true;
 		InputSystem.actions["Jump"].canceled  += _ => jumpPressed = false;
 		InputSystem.actions["Lock"].performed += _ => OnLockPressed();
-
     }
 
     void Update()

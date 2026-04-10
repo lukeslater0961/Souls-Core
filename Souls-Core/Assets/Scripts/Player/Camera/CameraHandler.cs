@@ -26,7 +26,6 @@ public class CameraHandler : MonoBehaviour
 	private float _inSpeed = 20f;
 	public LayerMask _occluders;
 	private float _currentLength;
-
 #endregion
 
     void Start()

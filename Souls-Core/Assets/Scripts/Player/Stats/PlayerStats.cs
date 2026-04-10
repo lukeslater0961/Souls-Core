@@ -9,8 +9,13 @@ public class PlayerStats : MonoBehaviour
 #region local stats
 	public float speed;
 	public float sprintSpeed;
+
 	public float stamina;
-	public float currentHealth;
+	public float maxStamina;
+
+	public float health;
+	public float maxHealth;
+
 	public float sensitivity;
 	public float jumpForce;
 	public float rotationSpeed;
@@ -19,11 +24,16 @@ public class PlayerStats : MonoBehaviour
     void Start()
     {
 		rotationSpeed = ps.rotationSpeed;
-		sprintSpeed = ps.sprintSpeed;
-		currentHealth = ps.maxHealth;
-		sensitivity = ps.sensitivity;
 		jumpForce = ps.jumpForce;
-		stamina = ps.stamina;
+		sensitivity = ps.sensitivity;
+
+		health = ps.maxHealth;
+		maxHealth = ps.maxHealth;
+
+		stamina = 10;
+		maxStamina = ps.maxStamina;
+
+		sprintSpeed = ps.sprintSpeed;
         speed = ps.speed;
     }
 }

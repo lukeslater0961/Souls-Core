@@ -22,6 +22,8 @@ public class MoveState : BaseState
 
 		manager.pc.mh.DoMovement(manager.pc.inputHandler.moveDirection, mode);
 
+		if (mode != MovementHandler.MoveMode.Sprint && manager.pc.stats.stamina < manager.pc.stats.maxStamina)
+			manager.pc.statHandler.RegenStamina();
 		//call move function in movement system here
 	}
 

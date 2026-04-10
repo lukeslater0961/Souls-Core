@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
 	private PlayerStateManager	playerSM;
 	public  InputHandler		inputHandler;
 	public	MovementHandler		mh;
+	public  PlayerStats			stats;
+	public  PlayerStatHandler   statHandler;
 #endregion
 
 	void Start()
@@ -21,6 +23,8 @@ public class PlayerController : MonoBehaviour
 		playerSM = GetComponent<PlayerStateManager>();
 		inputHandler = GetComponent<InputHandler>();
 		mh = GetComponent<MovementHandler>();
+		stats = GetComponent<PlayerStats>();
+		statHandler	= GetComponent<PlayerStatHandler>();	
 	}
 
 	void Update()
