@@ -1,21 +1,13 @@
 using UnityEngine;
 
-public class PlayerStats : MonoBehaviour
+public class PlayerStats : BaseStats
 {
 #region	ScriptableObjects
 	[SerializeField]	PlayerStatsSO ps;
 #endregion
 
 #region local stats
-	public float speed;
 	public float sprintSpeed;
-
-	public float stamina;
-	public float maxStamina;
-
-	public float health;
-	public float maxHealth;
-
 	public float sensitivity;
 	public float jumpForce;
 	public float rotationSpeed;
@@ -30,7 +22,7 @@ public class PlayerStats : MonoBehaviour
 		health = ps.maxHealth;
 		maxHealth = ps.maxHealth;
 
-		stamina = 10;
+		stamina = 0;
 		maxStamina = ps.maxStamina;
 
 		sprintSpeed = ps.sprintSpeed;

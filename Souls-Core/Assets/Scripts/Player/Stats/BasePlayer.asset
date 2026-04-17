@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStatsSO
   maxHealth: 100
   sprintSpeed: 15
-  stamina: 100
+  maxStamina: 100
   speed: 10
   sensitivity: 0.5
   jumpForce: 2

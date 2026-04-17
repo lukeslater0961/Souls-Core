@@ -16,15 +16,7 @@ public class MoveState : BaseState
 		if (manager.pc.inputHandler.jumpPressed && manager.pc.mh._isGrounded)
 			manager.pc.mh.Jump();
 		
-		var mode = (manager.pc.inputHandler.isSprinting) 
-			? MovementHandler.MoveMode.Sprint 
-			: MovementHandler.MoveMode.Walk;
-
-		manager.pc.mh.DoMovement(manager.pc.inputHandler.moveDirection, mode);
-
-		if (mode != MovementHandler.MoveMode.Sprint && manager.pc.stats.stamina < manager.pc.stats.maxStamina)
-			manager.pc.statHandler.RegenStamina();
-		//call move function in movement system here
+		manager.pc.mh.DoMovement(manager.pc.inputHandler.moveDirection, manager.pc.inputHandler.sprintPressed);
 	}
 
 	public override void OnExit(PlayerStateManager manager)

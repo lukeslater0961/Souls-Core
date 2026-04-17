@@ -4,8 +4,9 @@ using UnityEngine.InputSystem;
 public class InputHandler : MonoBehaviour
 {
 #region References
-	[SerializeField] LockOnHandler			_lockHandler;
-	[SerializeField] public CameraHandler	_camera;
+	[SerializeField] LockOnHandler				_lockHandler;
+	[SerializeField] public CameraHandler		_camera;
+	private					PlayerStatHandler	_statHandler;
 #endregion
 
 #region Inputs
@@ -18,16 +19,17 @@ public class InputHandler : MonoBehaviour
 	public Vector2	moveDirection;
 	public Vector2	lookDirection;
 	public bool		jumpPressed;
-	public bool		isSprinting;
+	public bool		sprintPressed;
 
     void Start()
     {
 		_move = InputSystem.actions.FindAction("move");
 		_look = InputSystem.actions.FindAction("look");
 		_lock = InputSystem.actions.FindAction("lock");
+		_statHandler = GetComponent<PlayerStatHandler>();
 
-		InputSystem.actions["Sprint"].performed += _ => isSprinting = true;
-		InputSystem.actions["Sprint"].canceled += _ => isSprinting = false;
+		InputSystem.actions["Sprint"].performed += _ => sprintPressed = true;
+		InputSystem.actions["Sprint"].canceled += _ => sprintPressed = false;
 		InputSystem.actions["Jump"].performed += _ => jumpPressed = true;
 		InputSystem.actions["Jump"].canceled  += _ => jumpPressed = false;
 		InputSystem.actions["Lock"].performed += _ => OnLockPressed();

@@ -605,7 +605,7 @@ Transform:
   m_GameObject: {fileID: 1115314578}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.93, y: 1.55741, z: 2.57}
+  m_LocalPosition: {x: 2.93, y: 3.11, z: 2.57}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -925,7 +925,7 @@ Transform:
   m_GameObject: {fileID: 1880806987}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.98, y: 1.55741, z: -3.62}
+  m_LocalPosition: {x: 2.98, y: 3.17, z: -3.62}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2489,6 +2489,7 @@ GameObject:
   - component: {fileID: 4930754086559695217}
   - component: {fileID: 4930754086559695222}
   - component: {fileID: 4930754086559695221}
+  - component: {fileID: 4930754086559695223}
   - component: {fileID: 4930754086559695220}
   - component: {fileID: 4930754086559695219}
   - component: {fileID: 4930754086559695218}
@@ -2536,8 +2537,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0194603b8e4b04773b9ec0e67ffd3688, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovementHandler
-  _cc: {fileID: 0}
   _cameraRef: {fileID: 1506263014}
+  _cc: {fileID: 0}
   _isGrounded: 0
 --- !u!114 &4930754086559695219
 MonoBehaviour:
@@ -2556,7 +2557,7 @@ MonoBehaviour:
   moveDirection: {x: 0, y: 0}
   lookDirection: {x: 0, y: 0}
   jumpPressed: 0
-  isSprinting: 0
+  sprintPressed: 0
 --- !u!114 &4930754086559695220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2582,11 +2583,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c784ac6dff6d1df995c53f81f2b0310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  ps: {fileID: 11400000, guid: 342578ab81c76c2d4b25de9fb88130a0, type: 2}
   speed: 0
-  sprintSpeed: 0
   stamina: 0
-  currentHealth: 0
+  maxStamina: 0
+  health: 0
+  maxHealth: 0
+  ps: {fileID: 11400000, guid: 342578ab81c76c2d4b25de9fb88130a0, type: 2}
+  sprintSpeed: 0
   sensitivity: 0
   jumpForce: 0
   rotationSpeed: 0
@@ -2604,6 +2607,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   inputHandler: {fileID: 0}
   mh: {fileID: 0}
+  stats: {fileID: 0}
+  statHandler: {fileID: 0}
+--- !u!114 &4930754086559695223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4930754086559695216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dea59937b480a45f68f2519b622e3681, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStatHandler
 --- !u!1 &4995647725194231810
 GameObject:
   m_ObjectHideFlags: 0

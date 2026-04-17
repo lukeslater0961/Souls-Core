@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class MovementHandler : MonoBehaviour
 {
@@ -6,12 +7,13 @@ public class MovementHandler : MonoBehaviour
 	[SerializeField] CameraHandler		_cameraRef;
 	public  CharacterController			_cc;
 	private PlayerStats					_stats;
+	private PlayerStatHandler			_statHandler;
 #endregion
 
 #region localValues
-	private Vector3 _velocity;
-	public  bool	_isGrounded;
-	private CameraHandler _camera;
+	private Vector3			_velocity;
+	public  bool			_isGrounded;
+	private CameraHandler	_camera;
 	
 	public enum MoveMode
 	{
@@ -26,12 +28,17 @@ public class MovementHandler : MonoBehaviour
 		_cc = GetComponent<CharacterController>();
 		_camera = _cameraRef.GetComponent<CameraHandler>();
 		_stats = GetComponent<PlayerStats>();
+		_statHandler = GetComponent<PlayerStatHandler>();
 	}
 
-	public void DoMovement(Vector2 moveDirection, MoveMode mode)
+	public void DoMovement(Vector2 moveDirection, bool isSprinting)
 	{
 		//player movement 
+		MoveMode mode = (isSprinting && _statHandler.HasEnoughStamina()) ? MoveMode.Sprint : MoveMode.Walk;
 		float playerVelocity = (mode == MoveMode.Walk) ? _stats.speed : _stats.sprintSpeed;
+		
+		UpdateStamina(mode);
+
 		Vector3 camForward = _cameraRef._transform.forward;
 		Vector3 camRight = _cameraRef._transform.right;
 
@@ -43,7 +50,7 @@ public class MovementHandler : MonoBehaviour
 
 		Vector3 move = camForward * moveDirection.y + camRight * moveDirection.x;
 		_cc.Move(move * playerVelocity * Time.deltaTime); 
-
+		
 		if (_camera._isLocked && mode == MoveMode.Walk)
 		{
 			RotateToTarget();
@@ -53,6 +60,17 @@ public class MovementHandler : MonoBehaviour
 		if (move == Vector3.zero) return;
 		Quaternion targetRotation = Quaternion.LookRotation(move);
 		transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _stats.rotationSpeed * Time.deltaTime);
+	}
+
+	void UpdateStamina(MoveMode mode)
+	{
+		if (mode == MoveMode.Sprint)
+		{
+			_statHandler.SpendStamina(_statHandler.sprintCost);
+			return;
+		}
+		
+		_statHandler.RegenStamina();
 	}
 
 	public void RotateToTarget()
@@ -80,6 +98,8 @@ public class MovementHandler : MonoBehaviour
 
 	public void Jump()
 	{
+		if (_stats.stamina - 10 <= 0) return;
+		_statHandler.SpendStamina(_statHandler.jumpCost);
 		_velocity.y = _stats.jumpForce;
 		_cc.Move(_velocity * Time.deltaTime);
 	}
