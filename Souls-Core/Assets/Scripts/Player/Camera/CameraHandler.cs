@@ -17,7 +17,9 @@ public class CameraHandler : MonoBehaviour
 	public Vector2		_look;
 	public  Transform	_target;
 	public	bool		_isLocked {get; set;}
+#endregion
 
+#region SpringArmParameters
 	[SerializeField]
 	[Range(0f, 10f)]
 	private float sphereRadius = .3f;
@@ -78,7 +80,6 @@ public class CameraHandler : MonoBehaviour
 		Quaternion targetRotation = Quaternion.LookRotation(direction);
 
 		_look.x = targetRotation.eulerAngles.y;
-		_look.y = targetRotation.eulerAngles.x;
 		transform.localRotation = Quaternion.Euler(-_look.y, _look.x, 0);
 	}
 }

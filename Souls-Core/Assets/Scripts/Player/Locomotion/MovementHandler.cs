@@ -98,8 +98,6 @@ public class MovementHandler : MonoBehaviour
 
 	public void Jump()
 	{
-		if (_stats.stamina - 10 <= 0) return;
-		_statHandler.SpendStamina(_statHandler.jumpCost);
 		_velocity.y = _stats.jumpForce;
 		_cc.Move(_velocity * Time.deltaTime);
 	}
