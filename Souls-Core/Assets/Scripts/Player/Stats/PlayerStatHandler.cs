@@ -4,7 +4,7 @@ using System;
 public class PlayerStatHandler : BaseStatsHandler
 {
 #region values
-	private float staminaRate = 1f;
+	private float staminaRate = 20f;
 	public  float jumpCost { get; private set; } = 10f;
 	public  float sprintCost {get ; private set;} = 5f;
 
@@ -20,19 +20,20 @@ public class PlayerStatHandler : BaseStatsHandler
 #endregion
 
 #region Events
-	public static event Action OnStatUpdated;
+	public static event Action<float> OnHealthUpdated;
+	public static event Action<float> OnStaminaUpdated;
 #endregion
 
 	public void TakeDamage(float amount)
 	{
 		_stats.health = Mathf.Clamp(_stats.health - amount, 0, _stats.maxHealth);
-		OnStatUpdated?.Invoke();
+		OnHealthUpdated?.Invoke(_stats.health);
 	}
 
 	public void ApplyDamageOverTime(float amount)
 	{
 		_stats.health -= Mathf.Clamp(_stats.health - amount * Time.deltaTime, 0, _stats.maxHealth);
-		OnStatUpdated?.Invoke();
+		OnHealthUpdated?.Invoke(_stats.health);
 	}
 
 	public bool HasEnoughStamina()
@@ -46,7 +47,7 @@ public class PlayerStatHandler : BaseStatsHandler
 	public void SpendStamina(float amount)
 	{
 		_stats.stamina = Mathf.Clamp(_stats.stamina - amount * Time.deltaTime, 0, _stats.maxStamina);
-		OnStatUpdated?.Invoke();
+		OnStaminaUpdated?.Invoke(_stats.stamina);
 
 		regenTimer = 0f;
 		if (_stats.stamina <= exhaustThreshold)
@@ -58,7 +59,7 @@ public class PlayerStatHandler : BaseStatsHandler
 		if (_stats.stamina >= _stats.maxStamina) return;
 
 		_stats.stamina = Mathf.Clamp(_stats.stamina + staminaRate * Time.deltaTime, 0, _stats.maxStamina);
-		OnStatUpdated?.Invoke();
+		OnStaminaUpdated?.Invoke(_stats.stamina);
 		regenTimer += Time.deltaTime;
 
 		if (regenTimer > regenDelay)

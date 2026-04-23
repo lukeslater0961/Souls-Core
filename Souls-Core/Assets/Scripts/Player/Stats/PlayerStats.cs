@@ -22,7 +22,7 @@ public class PlayerStats : BaseStats
 		health = ps.maxHealth;
 		maxHealth = ps.maxHealth;
 
-		stamina = 0;
+		stamina = ps.maxStamina;
 		maxStamina = ps.maxStamina;
 
 		sprintSpeed = ps.sprintSpeed;

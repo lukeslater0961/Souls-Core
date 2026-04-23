@@ -49,7 +49,7 @@ public class MovementHandler : MonoBehaviour
 		camRight.Normalize();
 
 		Vector3 move = camForward * moveDirection.y + camRight * moveDirection.x;
-		_cc.Move(move * playerVelocity * Time.deltaTime); 
+		_cc.Move(move * playerVelocity * Time.deltaTime);
 		
 		if (_camera._isLocked && mode == MoveMode.Walk)
 		{
