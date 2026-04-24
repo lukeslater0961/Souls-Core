@@ -8,6 +8,7 @@ public class MovementHandler : MonoBehaviour
 	public  CharacterController			_cc;
 	private PlayerStats					_stats;
 	private PlayerStatHandler			_statHandler;
+	private Animator					_animator;
 #endregion
 
 #region localValues
@@ -29,6 +30,7 @@ public class MovementHandler : MonoBehaviour
 		_camera = _cameraRef.GetComponent<CameraHandler>();
 		_stats = GetComponent<PlayerStats>();
 		_statHandler = GetComponent<PlayerStatHandler>();
+		_animator = GetComponent<Animator>();
 	}
 
 	public void DoMovement(Vector2 moveDirection, bool isSprinting)
@@ -36,7 +38,8 @@ public class MovementHandler : MonoBehaviour
 		//player movement 
 		MoveMode mode = (isSprinting && _statHandler.HasEnoughStamina()) ? MoveMode.Sprint : MoveMode.Walk;
 		float playerVelocity = (mode == MoveMode.Walk) ? _stats.speed : _stats.sprintSpeed;
-		
+		_animator.SetFloat("Speed", playerVelocity, 0.1f, Time.deltaTime);
+
 		UpdateStamina(mode);
 
 		Vector3 camForward = _cameraRef._transform.forward;

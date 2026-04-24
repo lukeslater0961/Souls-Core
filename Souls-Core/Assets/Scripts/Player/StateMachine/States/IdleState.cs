@@ -20,6 +20,7 @@ public class IdleState : BaseState
 
 		if (manager.pc.stats.stamina < manager.pc.stats.maxStamina)
 			manager.pc.statHandler.RegenStamina();
+		manager.pc.animator.SetFloat("Speed", 0, 0.1f, Time.deltaTime);
 	}
 
 	public override void OnExit(PlayerStateManager manager)
