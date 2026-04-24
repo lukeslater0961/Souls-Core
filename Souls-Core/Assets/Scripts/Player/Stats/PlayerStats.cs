@@ -13,7 +13,7 @@ public class PlayerStats : BaseStats
 	public float rotationSpeed;
 #endregion
 
-    void Start()
+    void Awake()
     {
 		rotationSpeed = ps.rotationSpeed;
 		jumpForce = ps.jumpForce;

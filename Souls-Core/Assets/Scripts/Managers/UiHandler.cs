@@ -8,7 +8,6 @@ public class UiHandler : MonoBehaviour
 	[SerializeField] Slider healthEaseSlider;
 
 	[SerializeField] Slider staminaSlider;
-	[SerializeField] Slider staminaEaseSlider;
 
     void Start()
     {
@@ -20,6 +19,12 @@ public class UiHandler : MonoBehaviour
 	{
 		PlayerStatHandler.OnStaminaUpdated -= UpdateStamina;
 		PlayerStatHandler.OnHealthUpdated -= UpdateHealth;
+	}
+
+	void FixedUpdate()
+	{
+		if (healthEaseSlider.value != healthSlider.value)
+			healthEaseSlider.value = Mathf.Lerp(healthEaseSlider.value, healthSlider.value, 0.05f);
 	}
 
 	void UpdateHealth(float health)

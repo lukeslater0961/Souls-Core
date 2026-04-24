@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour
 	void Start()
 	{
 		Init();
-
 		playerSM.SwitchState(PlayerStateManager.idleState);
 	}
 

@@ -22,7 +22,7 @@ public class CameraHandler : MonoBehaviour
 #region SpringArmParameters
 	[SerializeField]
 	[Range(0f, 10f)]
-	private float sphereRadius = .3f;
+	private float sphereRadius = .7f;
 	private float _armLength = 5f;
 	private float _outSpeed = 10f;
 	private float _inSpeed = 20f;
@@ -63,7 +63,8 @@ public class CameraHandler : MonoBehaviour
 		Vector3 origin = transform.position;
 		Vector3 direction = -_camera.transform.forward;
 		float target = _armLength;
-
+		
+		origin -= direction * sphereRadius; //displace raycast origin to avoid not detecting the walls when close
 		if (Physics.SphereCast(origin, sphereRadius, direction, out RaycastHit hit, _armLength, _occluders))
 			target = hit.distance;
 

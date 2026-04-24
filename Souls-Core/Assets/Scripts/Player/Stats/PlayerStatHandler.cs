@@ -24,15 +24,16 @@ public class PlayerStatHandler : BaseStatsHandler
 	public static event Action<float> OnStaminaUpdated;
 #endregion
 
-	public void TakeDamage(float amount)
+
+	public void GiveHealth()
 	{
-		_stats.health = Mathf.Clamp(_stats.health - amount, 0, _stats.maxHealth);
+		_stats.health = _stats.maxHealth;
 		OnHealthUpdated?.Invoke(_stats.health);
 	}
 
-	public void ApplyDamageOverTime(float amount)
+	public void TakeDamage(float amount)
 	{
-		_stats.health -= Mathf.Clamp(_stats.health - amount * Time.deltaTime, 0, _stats.maxHealth);
+		_stats.health = Mathf.Clamp(_stats.health - amount, 0, _stats.maxHealth);
 		OnHealthUpdated?.Invoke(_stats.health);
 	}
 
