@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
@@ -11,10 +12,16 @@ public class InputHandler : MonoBehaviour
 
 #region Inputs
 	private InputAction _move;
+	private InputAction _jump;
 	private InputAction _sprint;
 	private InputAction _look;
 	private InputAction _lock;
+	private InputAction _lightAttack;
+	private InputAction _heavyAttack;
 #endregion
+
+	public event Action OnLightAttack;
+	public event Action OnHeavyAttack;
 
 	public Vector2	moveDirection;
 	public Vector2	lookDirection;
@@ -26,13 +33,21 @@ public class InputHandler : MonoBehaviour
 		_move = InputSystem.actions.FindAction("move");
 		_look = InputSystem.actions.FindAction("look");
 		_lock = InputSystem.actions.FindAction("lock");
-		_statHandler = GetComponent<PlayerStatHandler>();
+		_sprint = InputSystem.actions.FindAction("sprint");
+		_jump = InputSystem.actions.FindAction("jump");
 
-		InputSystem.actions["Sprint"].performed += _ => sprintPressed = true;
-		InputSystem.actions["Sprint"].canceled += _ => sprintPressed = false;
-		InputSystem.actions["Jump"].performed += _ => jumpPressed = true;
-		InputSystem.actions["Jump"].canceled  += _ => jumpPressed = false;
-		InputSystem.actions["Lock"].performed += _ => OnLockPressed();
+		_lightAttack = InputSystem.actions.FindAction("lightattack");
+		_heavyAttack = InputSystem.actions.FindAction("heavyattack");
+
+		_sprint.performed += _ => sprintPressed = true;
+		_sprint.canceled += _ => sprintPressed = false;
+		_jump.performed += _ => jumpPressed = true;
+		_jump.canceled  += _ => jumpPressed = false;
+		_lock.performed += _ => OnLockPressed();
+		_lightAttack.performed += _ => OnLightAttack?.Invoke();
+		_heavyAttack.performed += _ => OnHeavyAttack?.Invoke();
+
+		_statHandler = GetComponent<PlayerStatHandler>();
     }
 
     void Update()
